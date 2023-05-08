@@ -4,6 +4,7 @@ namespace Mdhesari\Nasiba;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
+use Mdhesari\Nasiba\Exceptions\NasibaInvalidConfigurationException;
 
 class NasibaServiceProvider extends ServiceProvider
 {
@@ -47,11 +48,16 @@ class NasibaServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
+     * @throws NasibaInvalidConfigurationException
      */
     public function register()
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'nasiba');
+
+        if(is_null(config('nasiba.merchant'))) {
+            throw new NasibaInvalidConfigurationException;
+        }
 
         // Register the main class to use with the facade
         $this->app->singleton('nasiba', function () {
