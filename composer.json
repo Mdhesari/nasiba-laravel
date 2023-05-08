@@ -1,0 +1,57 @@
+{
+    "name": "mdhesari/nasiba",
+    "description": "Nasiba gateway",
+    "keywords": [
+        "mdhesari",
+        "nasiba"
+    ],
+    "homepage": "https://github.com/mdhesari/nasiba",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mohamad Hesari",
+            "email": "mdhesari99@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-http": "*",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/support": "^8.0",
+        "ext-openssl": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mdhesari\\Nasiba\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mdhesari\\Nasiba\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mdhesari\\Nasiba\\NasibaServiceProvider"
+            ],
+            "aliases": {
+                "Nasiba": "Mdhesari\\Nasiba\\NasibaFacade"
+            }
+        }
+    }
+}
