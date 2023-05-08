@@ -55,7 +55,7 @@ class NasibaServiceProvider extends ServiceProvider
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'nasiba');
 
-        if(is_null(config('nasiba.merchant'))) {
+        if ( is_null(config('nasiba.merchant')) ) {
             throw new NasibaInvalidConfigurationException;
         }
 
@@ -77,6 +77,7 @@ class NasibaServiceProvider extends ServiceProvider
             'terminalCode' => config('nasiba.terminal'),
             'merchantCode' => config('nasiba.merchant'),
             'callbackUrl'  => config('nasiba.callback'),
+            'signature'    => config('nasiba.signature'),
         ];
     }
 }
