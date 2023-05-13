@@ -27,7 +27,7 @@ class Nasiba
     public function getPaymentToken(array $data): mixed
     {
         $response = $this->client->post($this->url('payment/get-token/'), [
-            'body' => json_encode($data = $this->getParams([
+            'body'    => json_encode($data = $this->getParams([
                 'Amount'               => $data['quantity'],
                 'InvoiceNumber'        => $data['invoiceNumber'],
                 'Action'               => $data['action'] ?? 1003,
@@ -37,7 +37,7 @@ class Nasiba
                 'Mobile'               => $data['mobile'],
                 'ManualCreditPurchase' => false,
             ])),
-            'headers'     => [
+            'headers' => [
                 'Sign'         => $this->getSignature($data),
                 'Content-Type' => 'application/json',
             ]
