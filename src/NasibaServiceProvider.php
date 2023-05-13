@@ -65,7 +65,8 @@ class NasibaServiceProvider extends ServiceProvider
                 config('nasiba.base_url'),
                 $this->getNasibaConfig(),
                 new Client([
-                    'base_url' => config('nasiba.base_url'),
+                    'base_url'    => config('nasiba.base_url'),
+                    'http_errors' => false,
                 ])
             );
         });

@@ -26,17 +26,21 @@ class Nasiba
      */
     public function getPaymentToken(array $data): mixed
     {
-        $response = $this->client->post($this->url('payment/get-token'), [
-            'form_params' => $this->getParams([
+        $response = $this->client->post($this->url('payment/get-token/'), [
+            'body' => json_encode($data = $this->getParams([
                 'Amount'               => $data['quantity'],
-                'Action'               => $data['action'],
-                'ProductUID'           => $data['productId'],
+                'InvoiceNumber'        => $data['invoiceNumber'],
+                'Action'               => $data['action'] ?? 1003,
+                'ProductUID'           => $data['productId'] ?? "111f410c-4f59-437a-9b3d-1d7e725125e9",
                 'InstallmentsCount'    => $data['installmentsCount'],
                 'MaxCreditShare'       => $data['maxCreditShare'],
-                'CreditScore'          => $data['creditScore'],
                 'Mobile'               => $data['mobile'],
-                'ManualCreditPurchase' => $data['manualCreditPurchase'] ?? null,
-            ])
+                'ManualCreditPurchase' => false,
+            ])),
+            'headers'     => [
+                'Sign'         => $this->getSignature($data),
+                'Content-Type' => 'application/json',
+            ]
         ]);
 
         return $this->getResponse($response);
@@ -45,16 +49,13 @@ class Nasiba
     private function getParams(array $data)
     {
         $data = [
-            'Content-Type'    => 'application/json',
             'TerminalCode'    => $this->config['terminalCode'],
             'MerchantCode'    => $this->config['merchantCode'],
             'RedirectAddress' => $this->config['callbackUrl'],
-            'Timestamp'       => now()->timestamp,
-            'InvoiceData'     => today()->format('Y-m-d'),
+            'Timestamp'       => today()->format('Y-m-d').'T'.now()->format('h:i:s'),
+            'InvoiceDate'     => today()->format('Y-m-d'),
             ...$data,
         ];
-
-        $data['sign'] = $this->getSignature($data);
 
         return $data;
     }
