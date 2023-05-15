@@ -60,7 +60,7 @@ class Nasiba
         return $data;
     }
 
-    public function getUrl(string $token)
+    public function getGatewayUrl(string $token)
     {
         return $this->url('payment/?n='.$token);
     }
