@@ -37,10 +37,22 @@ class Nasiba
                 'Mobile'               => $data['mobile'],
                 'ManualCreditPurchase' => false,
             ])),
-            'headers' => [
-                'Sign'         => $this->getSignature($data),
-                'Content-Type' => 'application/json',
-            ]
+            'headers' => $this->getHeaders($data),
+        ]);
+
+        return $this->getResponse($response);
+    }
+
+    public function checkTransactionResult(array $data)
+    {
+        $response = $this->client->post('payment/check-transaction-result', [
+            'body'    => json_encode($data = [
+                'InvoiceNumber' => $data['invoiceNumber'],
+                'InvoiceDate'   => $data['invoiceDate'],
+                'TerminalCode'  => $this->config['terminalCode'],
+                'MerchantCode'  => $this->config['merchantCode'],
+            ]),
+            'headers' => $this->getHeaders($data),
         ]);
 
         return $this->getResponse($response);
@@ -70,5 +82,14 @@ class Nasiba
         openssl_sign(json_encode($data), $sign, $this->config['signature'], OPENSSL_ALGO_SHA1);
 
         return base64_encode($sign);
+    }
+
+    private function getHeaders(array $data, array $additionalHeaders = []): array
+    {
+        return [
+            'Sign'         => $this->getSignature($data),
+            'Content-Type' => 'application/json',
+            ...$additionalHeaders
+        ];
     }
 }
