@@ -45,7 +45,7 @@ class Nasiba
 
     public function checkTransactionResult(array $data)
     {
-        $response = $this->client->post('payment/check-transaction-result', [
+        $response = $this->client->post($this->url('payment/check-transaction-result/'), [
             'body'    => json_encode($data = [
                 'InvoiceNumber' => $data['invoiceNumber'],
                 'InvoiceDate'   => $data['invoiceDate'],
