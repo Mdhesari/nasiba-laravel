@@ -15,7 +15,7 @@ trait HttpClientTools
      */
     private function url(string $url): string
     {
-        return trim($this->base_url, '/').'/'.$url;
+        return trim($this->base_url, '/').'/'.trim($url, '/');
     }
 
     /**

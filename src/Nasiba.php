@@ -60,6 +60,11 @@ class Nasiba
         return $data;
     }
 
+    public function getUrl(string $token)
+    {
+        return $this->url('payment/?n='.$token);
+    }
+
     private function getSignature(array $data): string
     {
         openssl_sign(json_encode($data), $sign, $this->config['signature'], OPENSSL_ALGO_SHA1);
