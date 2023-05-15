@@ -43,12 +43,29 @@ class Nasiba
         return $this->getResponse($response);
     }
 
-    public function checkTransactionResult(array $data)
+    public function checkResult(array $data)
     {
         $response = $this->client->post($this->url('payment/check-transaction-result/'), [
             'body'    => json_encode($data = [
                 'InvoiceNumber' => $data['invoiceNumber'],
                 'InvoiceDate'   => $data['invoiceDate'],
+                'TerminalCode'  => $this->config['terminalCode'],
+                'MerchantCode'  => $this->config['merchantCode'],
+            ]),
+            'headers' => $this->getHeaders($data),
+        ]);
+
+        return $this->getResponse($response);
+    }
+
+    public function verify(array $data)
+    {
+        $response = $this->client->post($this->url('payment/verify/'), [
+            'body'    => json_encode($data = [
+                'InvoiceNumber' => $data['invoiceNumber'],
+                'InvoiceDate'   => $data['invoiceDate'],
+                'Amount'        => $data['quantity'],
+                'Timestamp'     => $data['timestamp'],
                 'TerminalCode'  => $this->config['terminalCode'],
                 'MerchantCode'  => $this->config['merchantCode'],
             ]),
@@ -64,7 +81,7 @@ class Nasiba
             'TerminalCode'    => $this->config['terminalCode'],
             'MerchantCode'    => $this->config['merchantCode'],
             'RedirectAddress' => $this->config['callbackUrl'],
-            'Timestamp'       => today()->format('Y-m-d').'T'.now()->format('h:i:s'),
+            'Timestamp'       => $data['timestamp'] ?? today()->format('Y-m-d').'T'.now()->format('h:i:s'),
             'InvoiceDate'     => today()->format('Y-m-d'),
             ...$data,
         ];
