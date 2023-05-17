@@ -31,7 +31,7 @@ class Nasiba
                 'Amount'               => $data['quantity'],
                 'InvoiceNumber'        => $data['invoiceNumber'],
                 'Action'               => $data['action'] ?? 1003,
-                'ProductUID'           => $data['productId'] ?? "111f410c-4f59-437a-9b3d-1d7e725125e9",
+                'ProductUID'           => $data['productId'] ?? $this->config['productId'],
                 'InstallmentsCount'    => $data['installmentsCount'],
                 'MaxCreditShare'       => $data['maxCreditShare'],
                 'Mobile'               => $data['mobile'],
