@@ -79,7 +79,7 @@ class NasibaServiceProvider extends ServiceProvider
             'merchantCode' => config('nasiba.merchant'),
             'callbackUrl'  => config('nasiba.callback'),
             'signature'    => config('nasiba.signature'),
-            'prodcutId'    => config('nasiba.product_id'),
+            'productId'    => config('nasiba.product_id'),
         ];
     }
 }
