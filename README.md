@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/mdhesari/nasiba.svg?style=flat-square)](https://packagist.org/packages/mdhesari/nasiba)
 ![GitHub Actions](https://github.com/mdhesari/nasiba/actions/workflows/main.yml/badge.svg)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Nasiba decorator for laravel.
 
 ## Installation
 
@@ -17,7 +17,14 @@ composer require mdhesari/nasiba
 ## Usage
 
 ```php
-// Usage description here
+app('nasiba')->getPaymentToken([
+    'quantity'                  => $quantity,
+            'invoiceNumber'     => $id,
+            'installmentsCount' => 1,
+            'maxCreditShare'    => $max_credit_share,
+            'mobile'            => $mobile,
+            'timestamp'         => $timestamp = today()->format('Y-m-d').'T'.now()->format('h:i:s'),
+]);
 ```
 
 ### Testing
@@ -40,8 +47,8 @@ If you discover any security related issues, please email mdhesari99@gmail.com i
 
 ## Credits
 
--   [Mohamad Hesari](https://github.com/mdhesari)
--   [All Contributors](../../contributors)
+- [Mohamad Hesari](https://github.com/mdhesari)
+- [All Contributors](../../contributors)
 
 ## License
 
